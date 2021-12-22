@@ -50,7 +50,7 @@ const isLetterInWord = letter => document.querySelector(`div.${letter}`) !== nul
 
 // Called when `letter` is in word. Update contents of divs with `letter`.
 //
-const handleCorrectGuess = letter => {
+const handleCorrectGuess = (letter, word) => {
   
   const letterDivs = document.querySelectorAll(`div.${letter}`);
   for (const div of letterDivs){
@@ -58,7 +58,7 @@ const handleCorrectGuess = letter => {
     numCorrect += 1;
   }
   
-  if (numCorrect === 5) {
+  if (numCorrect === word.length) {
     const unhide = document.querySelector("#win")
     unhide.style.display = ""
     
@@ -106,7 +106,7 @@ const resetGame = () => {
 //
 (function startGame() {
   // For now, we'll hardcode the word that the user has to guess.
-  const word = 'hello';
+  const word = WORDS[Math.floor(Math.random() * WORDS.length)];
 
   createDivsForChars(word);
   generateLetterButtons();
@@ -120,7 +120,7 @@ const resetGame = () => {
       const letter = button.innerHTML;
       
       if (isLetterInWord(letter)) {
-        handleCorrectGuess(letter);
+        handleCorrectGuess(letter, word);
       } else {
         handleWrongGuess(letter);
       }
